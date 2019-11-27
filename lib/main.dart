@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './transaction.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -10,21 +12,26 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 fontFamily: 'Merriweather',
             ),
-            home: MyHomePage(title: 'Flutter Demo Home Page'),
+            home: MyHomePage(),
         );
     }
 }
 
-class MyHomePage extends StatefulWidget {
-    MyHomePage({Key key, this.title}) : super(key: key);
-
-    final String title;
-
-    @override
-    _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
+    final List<Transaction> transactions = [
+        Transaction(
+            id: 't1',
+            title: 'apple pie',
+            amount: 20.20,
+            datetime: DateTime.now(),
+        ),
+        Transaction(
+            id: 't2',
+            title: 'thanksgiving turkey',
+            amount: 65.95,
+            datetime: DateTime.now(),
+        ),
+    ];
 
     @override
     Widget build(BuildContext context) {
@@ -75,18 +82,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                 ),
                             ),
-                            Card(
-                                elevation: 5,
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                    child: Container(
-                                        margin: EdgeInsets.symmetric(vertical: 16.0),
-                                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                        child: Text(
-                                            'this is a transaction!',
+                            Column(
+                                children: transactions.map((tx) {
+                                    return Card(
+                                        elevation: 5,
+                                        child: Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 20.0),
+                                            child: Container(
+                                                margin: EdgeInsets.symmetric(vertical: 16.0),
+                                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                                child: Text(
+                                                    tx.title,
+                                                ),
+                                            ),
                                         ),
-                                    ),
-                                ),
+                                    );
+                                }).toList(),
                             ),
                         ],
                     ),
